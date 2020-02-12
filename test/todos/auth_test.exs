@@ -6,9 +6,15 @@ defmodule Todos.AuthTest do
   describe "users" do
     alias Todos.Auth.User
 
-    @valid_attrs %{email: "some email", is_active: true}
-    @update_attrs %{email: "some updated email", is_active: false}
-    @invalid_attrs %{email: nil, is_active: nil}
+    @valid_attrs %{email: "some email", is_active: true, password: "some password"}
+    @update_attrs %{
+      email: "some updated email",
+      is_active: false,
+      password: "some updated password"
+    }
+    @invalid_attrs %{
+      email: nil, is_active: nil, password: nil
+    }
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -33,6 +39,7 @@ defmodule Todos.AuthTest do
       assert {:ok, %User{} = user} = Auth.create_user(@valid_attrs)
       assert user.email == "some email"
       assert user.is_active == true
+      assert Bcrypt.verify_pass("some password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -44,6 +51,7 @@ defmodule Todos.AuthTest do
       assert {:ok, %User{} = user} = Auth.update_user(user, @update_attrs)
       assert user.email == "some updated email"
       assert user.is_active == false
+      assert Bcrypt.verify_pass("some updated password", user.password_hash)
     end
 
     test "update_user/2 with invalid data returns error changeset" do

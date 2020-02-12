@@ -10,6 +10,9 @@ use Mix.Config
 config :todos,
   ecto_repos: [Todos.Repo]
 
+
+config :todos, Todos.Repo, migration_timestamps: [type: :utc_datetime_usec]
+
 # Configures the endpoint
 config :todos, TodosWeb.Endpoint,
   url: [host: "localhost"],
