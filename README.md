@@ -1,4 +1,4 @@
-# Todos
+# Todo api
 
 To start your Phoenix server:
 
