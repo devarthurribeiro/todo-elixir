@@ -3,7 +3,8 @@ defmodule Todos.Auth.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :email, :string
+    field :email, :string, null: false
+    field :password, :string
     field :is_active, :boolean, default: false
 
     timestamps()
